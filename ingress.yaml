@@ -8,7 +8,7 @@ metadata:
   name: hello-world-ingress
 spec:
   rules:
-    - host: hello-world.env-cluster.k8s.civo.com
+    - host: hello-world.aa50d065-2d50-42bf-8150-08060f577956.k8s.civo.com
       http:
         paths:
           -
