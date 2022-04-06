@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-world-service
+  name: hello-world
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hello-world-service
+      app: hello-world
   template:
     metadata:
       labels:
-        app: hello-world-service
+        app: hello-world
     spec:
       containers:
       - name: hello-world
         image: civo/docker-hello-world:latest
         env:
-        - name: SV_EXTERNAL_SERVICE_HOST_NAME
-          value: "server1.acme.org"
-        - name: SV_PORT_NUMBER
+        - name: HOST_NAME
+          value: "server1.com"
+        - name: PORT_NUMBER
           value: "9001"
         ports:
         - containerPort: 8080
@@ -26,10 +26,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-world-service
+  name: hello-world
 spec:
   selector:
-    app: hello-world-service
+    app: hello-world
   ports:
     - protocol: TCP
       port: 80
