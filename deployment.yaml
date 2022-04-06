@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: hello-world
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hello-world
@@ -13,5 +13,25 @@ spec:
         app: hello-world
     spec:
       containers:
-        - image: civo/docker-hello-world:latest
-          name: hello-world
+      - name: hello-world
+        image: civo/docker-hello-world:latest
+        env:
+        - name: HOST_NAME
+          value: "server1.com"
+        - name: PORT_NUMBER
+          value: "9001"
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world
+spec:
+  selector:
+    app: hello-world
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP
