@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-secrets
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-doppler
+  template:
+    metadata:
+      labels:
+        app: hello-world-doppler
+    spec:      
+      containers:
+      - name: test
+        image:  khabdrick/test:v1
+        envFrom:
+        - secretRef:
+            name:  doppler-token
+        ports:
+        - containerPort: 8080  
