@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-configmaps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-configmaps
+  template:
+    metadata:
+      labels:
+        app: hello-world-configmaps
+    spec:
+      containers:
+      - name: hello-world
+        image: civo/docker-hello-world:latest
+        envFrom:
+          - configMapRef: #used to state the configmap you need.
+              name: random
+        ports:
+        - containerPort: 8080

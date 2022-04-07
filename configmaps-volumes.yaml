@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-configmaps-volumes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-configmaps-volumes
+  template:
+    metadata:
+      labels:
+        app: hello-world-configmaps-volumes
+    spec:
+      volumes:
+        - name: configmap-volume
+          configMap:
+            name: random # name of configmap
+      containers:
+      - name: hello-world
+        image: civo/docker-hello-world:latest
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+          - name: configmap-volume
+            mountPath: "/etc/configmap-volume" # destination inside the Pod where the volume is mounted. This is where you will find the environment variables
