@@ -1,4 +1,6 @@
-FROM alpine
+
+FROM ubuntu
+
 
 # Install Doppler CLI
 RUN apt-get update && apt-get install -y apt-transport-https ca-certificates curl gnupg && \
@@ -7,6 +9,7 @@ RUN apt-get update && apt-get install -y apt-transport-https ca-certificates cur
     apt-get update && \
     apt-get -y install doppler
 
-# Use the Doppler CLI to run your application
-CMD ["doppler", "run", "--", "your-app-command"] 
-CMD ["echo", "Hello World!"]
+COPY start.sh .
+
+# Requires `DOPPLER_TOKEN` environment variable from Kubernetes secret
+CMD ["doppler", "run", "--", "start.sh"]
